@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: '/api' // Adjust based on your production setup
+    apiUrl: '/api' // 使用相对路径，假设前后端部署在同一域
   };

@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  # 后端API服务
+  backend:
+    build: ./backend
+    container_name: housing-price-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - FLASK_ENV=production
+
+  # 前端服务
+  frontend:
+    build: ./frontend
+    container_name: housing-price-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend 

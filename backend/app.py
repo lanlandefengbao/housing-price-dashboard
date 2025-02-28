@@ -310,5 +310,6 @@ if __name__ == '__main__':
     print("Loading model...")
     load_ml_model()
     
-    # Run the Flask app
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # 仅在直接运行此脚本时执行app.run
+    if __name__ == "__main__":
+        app.run(debug=True, host='0.0.0.0', port=5000)

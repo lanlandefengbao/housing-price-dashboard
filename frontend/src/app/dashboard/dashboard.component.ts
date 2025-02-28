@@ -192,8 +192,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     
     // Load data for each selected region
     regionIds.forEach((regionId, index) => {
-      this.apiService.getPrices(regionId, startDate || undefined, endDate || undefined).subscribe({
-        next: (response) => {
+    this.apiService.getPrices(regionId, startDate || undefined, endDate || undefined).subscribe({
+      next: (response) => {
           // Find region name
           const region = this.regions.find(r => r.RegionID === regionId);
           const regionName = region ? `${region.RegionName}, ${region.StateName}` : `Region ${regionId}`;
@@ -227,18 +227,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             this.createOrUpdateBarChart(allDates, datasets);
             this.calculateStatistics(allPrices);
             this.hasChartData = datasets.length > 0 && allDates.length > 0;
-            this.isLoading = false;
+        this.isLoading = false;
             
             // 如果预测选项已启用，自动加载预测数据
             if (this.showForecast) {
               this.loadPredictions();
             }
           }
-        },
-        error: (error) => {
-          this.error = 'Failed to load price data. Please try again later.';
-          console.error('Error loading price data:', error);
-          this.isLoading = false;
+      },
+      error: (error) => {
+        this.error = 'Failed to load price data. Please try again later.';
+        console.error('Error loading price data:', error);
+        this.isLoading = false;
           this.hasChartData = false;
         }
       });
@@ -443,7 +443,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     let loadedCount = 0;
     regionIds.forEach(regionId => {
       this.apiService.getPredictions(regionId, months, showConfidenceZone).subscribe({
-        next: (response) => {
+      next: (response) => {
           // Find dataset index for this region
           const datasetIndex = this.priceChart.data.datasets.findIndex(
             ds => {
@@ -502,16 +502,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           if (loadedCount === regionIds.length) {
             // 所有区域数据已加载，现在统一处理图表
             this.updateChartWithAllPredictions(allRegionsData, this.currentChartData.dates, allFutureDates, showConfidenceZone);
-            this.showingPrediction = true;
+          this.showingPrediction = true;
             this.isLoading = false;
-          }
-        },
-        error: (error) => {
-          this.error = 'Failed to load prediction data. Please try again later.';
-          console.error('Error loading predictions:', error);
-          this.isLoading = false;
         }
-      });
+      },
+      error: (error) => {
+        this.error = 'Failed to load prediction data. Please try again later.';
+        console.error('Error loading predictions:', error);
+        this.isLoading = false;
+      }
+    });
     });
   }
   
@@ -699,7 +699,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.currentChartData.dates = allDates;
     
     // 更新图表
-    this.priceChart.update();
+      this.priceChart.update();
     
     // 更新柱状图显示预测数据
     Object.keys(allRegionsData).forEach(regionId => {
