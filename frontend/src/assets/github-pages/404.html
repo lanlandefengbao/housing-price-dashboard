@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <title>房价预测仪表盘 - 页面未找到</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="房价预测仪表盘应用 - 交互式可视化和预测工具">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #495057;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 600px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      margin: 20px;
+    }
+    
+    h1 {
+      font-size: 32px;
+      margin-bottom: 16px;
+      color: #343a40;
+    }
+    
+    p {
+      font-size: 18px;
+      margin-bottom: 24px;
+    }
+    
+    a {
+      display: inline-block;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+    
+    a:hover {
+      background-color: #0069d9;
+    }
+    
+    .icon {
+      font-size: 80px;
+      margin-bottom: 16px;
+      color: #6c757d;
+    }
+  </style>
+  
+  <!-- GitHub Pages SPA 重定向 -->
+  <script>
+    // 存储当前页面URL，以便重定向后恢复
+    sessionStorage.setItem('redirectUrl', window.location.href);
+    
+    // 获取项目基础路径
+    const baseHref = '/housing-price-dashboard/';
+    
+    // 构建重定向URL
+    const redirectUrl = baseHref + '?redirect=' + encodeURIComponent(window.location.pathname);
+    
+    // 重定向到主页
+    window.location.href = redirectUrl;
+  </script>
+  
+  <!-- 如果JavaScript禁用，使用meta刷新作为备用方案 -->
+  <meta http-equiv="refresh" content="0;url=/housing-price-dashboard/">
+</head>
+<body>
+  <div class="container">
+    <div class="icon">404</div>
+    <h1>页面未找到</h1>
+    <p>您请求的页面无法找到，正在将您重定向到首页。</p>
+    <a href="/housing-price-dashboard/">返回首页</a>
+  </div>
+</body>
+</html> 

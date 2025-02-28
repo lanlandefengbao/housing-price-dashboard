@@ -1,0 +1,126 @@
+.dashboard-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-title {
+  display: none; /* 隐藏重复的标题 */
+}
+
+.control-panel {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.forecast-control {
+  display: flex;
+  align-items: center;
+}
+
+.chart-container {
+  position: relative;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 400px;
+}
+
+.chart-title {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  margin: 0;
+  font-size: 16px;
+  color: #2c3e50;
+}
+
+.form-control {
+  margin-bottom: 10px;
+}
+
+.region-info {
+  margin-bottom: 20px;
+}
+
+.prediction-notice {
+  margin-top: 10px;
+}
+
+.badge {
+  font-size: 0.9em;
+  font-weight: normal;
+}
+
+.statistics-panel {
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  height: 100%;
+}
+
+.statistics-title {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #2c3e50;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+
+.statistics-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.stat-item {
+  font-size: 14px;
+}
+
+.statistics-placeholder {
+  color: #6c757d;
+  font-style: italic;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.date-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 响应式样式 */
+@media (max-width: 768px) {
+  .button-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .forecast-control {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  
+  .chart-container {
+    height: auto;
+    min-height: 350px;
+  }
+  
+  .statistics-panel {
+    margin-top: 15px;
+  }
+}

@@ -1,0 +1,22 @@
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  background-color: #007bff;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  border-radius: 5px;
+}
+
+footer {
+  margin-top: 50px;
+  text-align: center;
+  color: #666;
+  padding: 15px;
+  border-top: 1px solid #eee;
+}

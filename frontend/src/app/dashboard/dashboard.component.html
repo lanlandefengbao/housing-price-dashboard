@@ -1,0 +1,127 @@
+<div class="dashboard-container">
+  <h2 class="dashboard-title">Housing Price Dashboard</h2>
+  
+  <div class="control-panel" [formGroup]="formGroup">
+    <div class="row mb-3">
+      <!-- 州和区域选择器 -->
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="stateSelect">Select States:</label>
+            <select multiple id="stateSelect" formControlName="selectedStates" class="form-control" (change)="onStateSelectionChange()">
+              <option *ngFor="let state of availableStates" [value]="state">
+                {{ state }}
+              </option>
+            </select>
+            <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple states</small>
+          </div>
+          
+          <div class="col-md-6">
+            <label for="regionSelect">Select Regions:</label>
+            <select multiple id="regionSelect" formControlName="regionIds" class="form-control">
+              <option *ngFor="let region of filteredRegions" [value]="region.RegionID">
+                {{ region.RegionName }}
+              </option>
+            </select>
+            <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple regions</small>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 日期范围 -->
+      <div class="col-md-3">
+        <div class="date-container">
+          <div class="mb-2">
+            <label for="start-date" class="form-label">Start Date:</label>
+            <input type="date" id="start-date" class="form-control" formControlName="startDate">
+          </div>
+          
+          <div>
+            <label for="end-date" class="form-label">End Date:</label>
+            <input type="date" id="end-date" class="form-control" formControlName="endDate">
+          </div>
+        </div>
+      </div>
+      
+      <!-- 统计摘要区域 -->
+      <div class="col-md-3">
+        <div class="statistics-panel">
+          <h5 class="statistics-title">Statistics Summary</h5>
+          <div *ngIf="statistics" class="statistics-content">
+            <div class="stat-item"><strong>Mean:</strong> ${{ statistics.mean | number:'1.0-0' }}</div>
+            <div class="stat-item"><strong>Median:</strong> ${{ statistics.median | number:'1.0-0' }}</div>
+            <div class="stat-item"><strong>Std Dev:</strong> ${{ statistics.stdDev | number:'1.0-0' }}</div>
+            <div class="stat-item"><strong>Skewness:</strong> {{ statistics.skewness | number:'1.2-2' }}</div>
+            <div class="stat-item"><strong>P90:</strong> ${{ statistics.percentile90 | number:'1.0-0' }}</div>
+          </div>
+          <div *ngIf="!statistics" class="statistics-placeholder">
+            Select regions and date range to view statistics
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 操作按钮区域 - 移动预测和置信区间按钮到这里 -->
+    <div class="row mb-4">
+      <div class="col button-group">
+        <!-- 更新图表按钮 -->
+        <button type="button" class="btn btn-primary me-2" (click)="loadPriceData()">
+          Update Chart
+        </button>
+        
+        <!-- 预测控制 -->
+        <div class="forecast-control d-inline-block me-2">
+          <button class="btn" [class.btn-secondary]="!showForecast" [class.btn-primary]="showForecast" (click)="toggleForecast()">
+            Forecast: {{ showForecast ? 'ON' : 'OFF' }}
+          </button>
+        </div>
+        
+        <!-- 置信区间控制 -->
+        <button class="btn me-2" [class.btn-secondary]="!showConfidenceIntervals" [class.btn-primary]="showConfidenceIntervals" (click)="toggleConfidenceIntervals()">
+          Prediction Interval: {{ showConfidenceIntervals ? 'ON' : 'OFF' }}
+        </button>
+        
+        <!-- 下载按钮 -->
+        <button type="button" class="btn btn-success" [disabled]="!hasChartData" (click)="downloadChartData()">
+          <i class="bi bi-download"></i> Download Data
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 错误信息 -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+  
+  <!-- 加载指示器 -->
+  <div *ngIf="isLoading" class="text-center my-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-2">Loading data...</p>
+  </div>
+  
+  <!-- 区域信息 -->
+  <div *ngIf="selectedRegion" class="region-info">
+    <h3>{{ selectedRegion.name }}, {{ selectedRegion.state }}</h3>
+    <p>Region type: {{ selectedRegion.type }}</p>
+    <p *ngIf="showingPrediction" class="prediction-notice">
+      <span class="badge bg-info">
+        Showing price prediction for next 5 months
+      </span>
+    </p>
+  </div>
+  
+  <!-- 图表容器 -->
+  <div class="chart-container">
+    <canvas #priceChart (click)="handleChartClick($event)"></canvas>
+  </div>
+  
+  <!-- 条形图 -->
+  <div class="chart-container">
+    <h5 class="chart-title" *ngIf="selectedMonth">Price Details for {{ selectedMonth }}</h5>
+    <h5 class="chart-title" *ngIf="!selectedMonth">Yearly Price Averages</h5>
+    <canvas #priceBarChart></canvas>
+  </div>
+</div>

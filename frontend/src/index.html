@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <title>房价预测仪表盘</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="交互式仪表盘，用于可视化和预测不同地区的房价趋势">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  
+  <!-- GitHub Pages SPA 路由支持 -->
+  <script>
+    // 检查是否从404页面重定向
+    (function() {
+      const redirectUrl = sessionStorage.getItem('redirectUrl');
+      if (redirectUrl) {
+        // 清除重定向URL
+        sessionStorage.removeItem('redirectUrl');
+        
+        // 从URL中提取路径
+        const url = new URL(redirectUrl);
+        const path = url.pathname;
+        
+        // 从基础路径解析相对路径
+        const baseHref = document.querySelector('base').getAttribute('href');
+        const relativePath = path.startsWith(baseHref) ? path.substring(baseHref.length) : path;
+        
+        // 更新浏览器历史记录，不触发导航
+        if (relativePath && relativePath !== '/') {
+          history.replaceState(null, null, relativePath);
+        }
+      }
+    })();
+  </script>
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
