@@ -1,0 +1,51 @@
+housing-price-dashboard/
+├── backend/
+│   ├── app.py                   # Flask API with data processing & prediction logic
+│   ├── Data.csv                 # Housing price data
+│   ├── markov_model.h5          # Trained LSTM model for price prediction
+│   ├── model_training_v1.py     # Script used to train the prediction model
+│   └── requirements.txt         # Python dependencies
+│
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── dashboard/               # To be created
+│   │   │   │   ├── dashboard.component.ts      # Dashboard component logic
+│   │   │   │   ├── dashboard.component.html    # Dashboard template
+│   │   │   │   └── dashboard.component.css     # Dashboard styles
+│   │   │   │
+│   │   │   ├── services/               # To be created
+│   │   │   │   └── api.service.ts      # Service to connect to backend API
+│   │   │   │
+│   │   │   ├── app.component.ts        # Root component (existing)
+│   │   │   ├── app.component.html      # Root component template (existing)
+│   │   │   ├── app.component.css       # Root component styles (existing)
+│   │   │
+│   │   ├── environments/          # To be created
+│   │   │   ├── environment.ts          # Development environment config
+│   │   │   └── environment.prod.ts     # Production environment config
+│   │   │
+│   │   ├── index.html                  # Main HTML file (existing)
+│   │   ├── main.ts                     # Main entry point (existing)
+│   │   ├── main.server.ts              # SSR entry point (existing)
+│   │   ├── server.ts                   # Server-side rendering (existing) 
+│   │   └── styles.css                  # Global styles (existing)
+│   │
+│   ├── public/                         # Static assets (existing)
+│   │   └── favicon.ico                 # Browser favicon (existing)
+│   │
+│   ├── .vscode/                        # VS Code settings (existing)
+│   │   ├── extensions.json
+│   │   ├── launch.json
+│   │   └── tasks.json
+│   │
+│   ├── angular.json                    # Angular CLI configuration (existing)
+│   ├── package.json                    # NPM dependencies and scripts (existing)
+│   ├── tsconfig.json                   # TypeScript configuration (existing)
+│   ├── tsconfig.app.json               # App-specific TypeScript config (existing)
+│   ├── tsconfig.spec.json              # Test TypeScript config (existing)
+│   ├── .editorconfig                   # Editor settings (existing)
+│   ├── .gitignore                      # Git ignore rules (existing)
+│   └── README.md                       # Frontend documentation (existing)
+│
+└── README.md                           # Project documentation (to be created)
