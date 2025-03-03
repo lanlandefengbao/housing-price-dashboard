@@ -1,39 +1,21 @@
-name: Deploy to GitHub Pages
-
+name: Deploy
 on:
   push:
-    branches:
-      - main  # 设置为您的主分支名
+    branches: [main]
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-      
-      - name: Setup Node.js 📦
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
-      
-      - name: Install Dependencies 🔧
-        run: |
-          cd frontend
+    - uses: actions/checkout@v3
+    - name: Deploy to Server
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          cd /var/www/my-app
+          git pull
           npm install
-      
-      - name: Build 👷
-        run: |
-          cd frontend
-          npm run build
-          # 创建一个.nojekyll文件避免GitHub Pages使用Jekyll处理
-          touch dist/frontend/browser/.nojekyll
-      
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages
-          folder: frontend/dist/frontend/browser 
+          pm2 restart all 
