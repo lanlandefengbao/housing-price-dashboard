@@ -177,46 +177,46 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       .subscribe({
         next: (responses) => {
           // 创建要显示的数据集
-          const datasets: any[] = [];
-          let allDates: string[] = [];
-          let allPrices: number[] = []; // 用于计算统计数据
-          
+    const datasets: any[] = [];
+    let allDates: string[] = [];
+    let allPrices: number[] = []; // 用于计算统计数据
+    
           // 颜色数组用于不同区域
-          const colors = [
-            { border: 'rgba(54, 162, 235, 1)', background: 'rgba(54, 162, 235, 0.2)' },
-            { border: 'rgba(75, 192, 192, 1)', background: 'rgba(75, 192, 192, 0.2)' },
-            { border: 'rgba(153, 102, 255, 1)', background: 'rgba(153, 102, 255, 0.2)' },
-            { border: 'rgba(255, 159, 64, 1)', background: 'rgba(255, 159, 64, 0.2)' },
-            { border: 'rgba(255, 99, 132, 1)', background: 'rgba(255, 99, 132, 0.2)' },
-            // Add more colors as needed
-          ];
-          
+    const colors = [
+      { border: 'rgba(54, 162, 235, 1)', background: 'rgba(54, 162, 235, 0.2)' },
+      { border: 'rgba(75, 192, 192, 1)', background: 'rgba(75, 192, 192, 0.2)' },
+      { border: 'rgba(153, 102, 255, 1)', background: 'rgba(153, 102, 255, 0.2)' },
+      { border: 'rgba(255, 159, 64, 1)', background: 'rgba(255, 159, 64, 0.2)' },
+      { border: 'rgba(255, 99, 132, 1)', background: 'rgba(255, 99, 132, 0.2)' },
+      // Add more colors as needed
+    ];
+    
           // 处理每个区域的响应
           Object.keys(responses).forEach((regionId, index) => {
             const response = responses[regionId];
             
             // 找出区域名称
-            const region = this.regions.find(r => r.RegionID === regionId);
-            const regionName = region ? `${region.RegionName}, ${region.StateName}` : `Region ${regionId}`;
-            
+          const region = this.regions.find(r => r.RegionID === regionId);
+          const regionName = region ? `${region.RegionName}, ${region.StateName}` : `Region ${regionId}`;
+          
             // 添加到数据集
-            datasets.push({
-              label: regionName,
-              data: response.prices,
-              borderColor: colors[index % colors.length].border,
-              backgroundColor: colors[index % colors.length].background,
-              borderWidth: 1,
-              tension: 0.1,
-              regionId: regionId
-            });
-            
+          datasets.push({
+            label: regionName,
+            data: response.prices,
+            borderColor: colors[index % colors.length].border,
+            backgroundColor: colors[index % colors.length].background,
+            borderWidth: 1,
+            tension: 0.1,
+            regionId: regionId
+          });
+          
             // 收集所有价格用于统计
-            allPrices = [...allPrices, ...response.prices];
-            
+          allPrices = [...allPrices, ...response.prices];
+          
             // 更新日期数组，选择最长的
-            if (response.dates.length > allDates.length) {
-              allDates = response.dates;
-            }
+          if (response.dates.length > allDates.length) {
+            allDates = response.dates;
+          }
           });
           
           // 保存当前数据用于下载
@@ -239,8 +239,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           }
           
           // 创建或更新图表
-          this.createOrUpdateChart(allDates, datasets);
-          this.createOrUpdateBarChart(allDates, datasets);
+            this.createOrUpdateChart(allDates, datasets);
+            this.createOrUpdateBarChart(allDates, datasets);
           
           // 使用优化后的统计API获取统计数据 - 如果选择了单个区域
           if (regionIds.length === 1) {
@@ -272,21 +272,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             this.statistics = null;
           }
           
-          this.hasChartData = datasets.length > 0 && allDates.length > 0;
-          this.isLoading = false;
-          
-          // 如果预测选项已启用，自动加载预测数据
+            this.hasChartData = datasets.length > 0 && allDates.length > 0;
+        this.isLoading = false;
+            
+            // 如果预测选项已启用，自动加载预测数据
           if (this.showForecast && this.hasChartData) {
             // 延迟一点时间以确保图表已完全渲染
             setTimeout(() => {
               this.doLoadPredictions();
             }, 100);
           }
-        },
-        error: (error) => {
-          this.error = 'Failed to load price data. Please try again later.';
-          console.error('Error loading price data:', error);
-          this.isLoading = false;
+      },
+      error: (error) => {
+        this.error = 'Failed to load price data. Please try again later.';
+        console.error('Error loading price data:', error);
+        this.isLoading = false;
           this.hasChartData = false;
         }
       });
@@ -394,68 +394,68 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.apiService.getBulkPredictions(regionIds, months, showConfidenceZone)
       .subscribe({
         next: (responses) => {
-          // 用于存储所有区域的最大未来日期
-          let allFutureDates: string[] = [];
+    // 用于存储所有区域的最大未来日期
+    let allFutureDates: string[] = [];
           // 用于存储所有区域的数据集信息
-          const allRegionsData: {[key: string]: any} = {};
-          
+    const allRegionsData: {[key: string]: any} = {};
+    
           // 处理每个区域的预测响应
           Object.keys(responses).forEach(regionId => {
             const response = responses[regionId];
             
             // 找到该区域在图表中的索引
-            const datasetIndex = this.priceChart.data.datasets.findIndex(
-              ds => {
-                const customDs = ds as any;
-                return customDs.regionId === regionId && !customDs.isPrediction && !customDs.isConfidenceBound;
-              }
-            );
-            
-            if (datasetIndex !== -1) {
+          const datasetIndex = this.priceChart.data.datasets.findIndex(
+            ds => {
+              const customDs = ds as any;
+              return customDs.regionId === regionId && !customDs.isPrediction && !customDs.isConfidenceBound;
+            }
+          );
+          
+          if (datasetIndex !== -1) {
               // 获取历史数据
               const historicalDates = [...this.currentChartData.dates];
-              const historicalPrices = [...this.priceChart.data.datasets[datasetIndex].data] as number[];
-              
-              // 获取最后一个历史数据点
-              const lastHistoricalDate = historicalDates[historicalDates.length - 1];
-              const lastHistoricalPrice = historicalPrices[historicalPrices.length - 1];
-              
+            const historicalPrices = [...this.priceChart.data.datasets[datasetIndex].data] as number[];
+            
+            // 获取最后一个历史数据点
+            const lastHistoricalDate = historicalDates[historicalDates.length - 1];
+            const lastHistoricalPrice = historicalPrices[historicalPrices.length - 1];
+            
               // 获取颜色
-              const originalColor = this.priceChart.data.datasets[datasetIndex].borderColor;
-              const originalBgColor = this.priceChart.data.datasets[datasetIndex].backgroundColor;
-              
+            const originalColor = this.priceChart.data.datasets[datasetIndex].borderColor;
+            const originalBgColor = this.priceChart.data.datasets[datasetIndex].backgroundColor;
+            
               // 合并到全局未来日期数组 - 使用正确的字段名(dates)
               allFutureDates = this.mergeAndSortDates(allFutureDates, response.dates);
               
               // 存储该区域的数据
-              allRegionsData[regionId] = {
-                datasetIndex,
-                historicalDates,
-                historicalPrices,
-                lastHistoricalPrice,
-                lastHistoricalDate,
+            allRegionsData[regionId] = {
+              datasetIndex,
+              historicalDates,
+              historicalPrices,
+              lastHistoricalPrice,
+              lastHistoricalDate,
                 futureDates: response.dates,
-                predictions: response.predictions,
-                originalColor,
-                originalBgColor,
-                confidenceIntervals: response.confidence_intervals,
-                regionName: this.priceChart.data.datasets[datasetIndex].label
-              };
-            }
+              predictions: response.predictions,
+              originalColor,
+              originalBgColor,
+              confidenceIntervals: response.confidence_intervals,
+              regionName: this.priceChart.data.datasets[datasetIndex].label
+            };
+          }
           });
           
           // 添加预测数据到图表
-          this.updateChartWithAllPredictions(allRegionsData, this.currentChartData.dates, allFutureDates, showConfidenceZone);
+            this.updateChartWithAllPredictions(allRegionsData, this.currentChartData.dates, allFutureDates, showConfidenceZone);
           
           this.showingPrediction = true;
-          this.isLoading = false;
-        },
-        error: (error) => {
+            this.isLoading = false;
+      },
+      error: (error) => {
           this.error = 'Failed to load predictions. Please try again later.';
-          console.error('Error loading predictions:', error);
-          this.isLoading = false;
-        }
-      });
+        console.error('Error loading predictions:', error);
+        this.isLoading = false;
+      }
+    });
   }
   
   // 将预测数据添加到图表
@@ -568,7 +568,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           pointRadius: 0,
           tension: 0.4,
           fill: false,
-          regionId: regionId,
+        regionId: regionId,
           isConfidenceBound: true,
           isArea: true
         };
@@ -646,7 +646,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     });
     
     // 更新图表
-    this.priceChart.update();
+      this.priceChart.update();
   }
   
   // 辅助方法：转换颜色为透明色
@@ -1076,7 +1076,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.barChart.data.datasets = monthlyData;
     this.barChart.update();
   }
-  
+
   // 获取数据集颜色
   getDatasetColor(label: string): string {
     if (!this.priceChart) return 'rgba(54, 162, 235, 1)';

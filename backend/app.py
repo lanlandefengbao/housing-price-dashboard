@@ -1,7 +1,7 @@
 # housing-price-dashboard/backend/app.py
 import pandas as pd
 import numpy as np
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import tensorflow as tf
 from tensorflow.keras.models import load_model
@@ -26,7 +26,7 @@ if gpus:
         print(f"GPU设置错误: {e}")
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for Angular frontend
+CORS(app, resources={r"/api/*": {"origins": "*"}})  # Enable CORS for all origins, only for API routes
 
 # Global variables to store data and model
 data = None
@@ -476,6 +476,23 @@ def get_statistics():
     except Exception as e:
         return jsonify({'error': f'Error calculating statistics: {str(e)}'}), 500
 
+# 主页路由 - 提供前端应用
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_frontend(path):
+    """Serve frontend static files or index.html for SPA routes"""
+    # 检查是否存在静态目录
+    static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+    
+    if not os.path.exists(static_folder):
+        return "Frontend not built. Please run the deploy script first.", 404
+        
+    if path and os.path.exists(os.path.join(static_folder, path)):
+        return send_from_directory('static', path)
+    else:
+        # 对于所有其他路由，返回index.html（SPA应用需要）
+        return send_from_directory('static', 'index.html')
+
 if __name__ == '__main__':
     # 初始化应用程序数据
     print("Loading data...")
@@ -489,5 +506,5 @@ if __name__ == '__main__':
         print(f"警告: 模型加载失败: {e}")
         print("应用程序将在没有预测功能的情况下继续运行")
     
-    # 启动Flask应用程序
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # 启动Flask应用程序 - 设置host为0.0.0.0允许外部访问
+    app.run(debug=False, host='0.0.0.0', port=5000)
