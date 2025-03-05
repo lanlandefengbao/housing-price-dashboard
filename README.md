@@ -1,0 +1,1 @@
+A full-stack web demo that visualizes historical housing price data and provides predictive analytics. The system allows users to explore regional housing trends, compare multiple regions simultaneously, and view price forecasts with confidence intervals.
